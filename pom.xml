@@ -10,7 +10,7 @@
 
     <groupId>net.sourceforge.dynamicreports</groupId>
     <artifactId>dynamicreports-parent</artifactId>
-    <version>6.12.2-SNAPSHOT</version>
+    <version>6.12.1-inv</version>
     <packaging>pom</packaging>
 
     <name>DynamicReports - parent</name>
@@ -279,6 +279,11 @@
                 <version>${jul-to-slf4jVersion}</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+			    <groupId>jakarta.xml.bind</groupId>
+			    <artifactId>jakarta.xml.bind-api</artifactId>
+			    <version>2.3.3</version>
+			</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -418,7 +423,7 @@
                 <plugin>
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
                     <artifactId>maven-jaxb2-plugin</artifactId>
-                    <version>0.14.0</version>
+                    <version>0.15.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -611,6 +616,23 @@
                             <defaultSince>${project.version}</defaultSince>
                         </configuration>
                     </plugin>
+                    			<plugin>
+        <groupId>org.eclipse.transformer</groupId>
+        <artifactId>org.eclipse.transformer.maven</artifactId>
+        <version>0.2.0</version>
+        <executions>
+          <execution>
+            <id>jakarta-ee</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <classifier>jakarta</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
                 </plugins>
             </build>
         </profile>
@@ -722,20 +744,43 @@
 
     </profiles>
 
-    <repositories>
-        <!--Repository containing com.lowagie:itext:jar:2.1.7.js7, not available in maven central -->
-        <repository>
-            <id>jaspersoft-third-party</id>
-            <url>
-                https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/
-            </url>
-        </repository>
-        <repository>
-            <id>jr-ce-releases</id>
-            <name>JasperReports CE Releases</name>
-            <url>
-                https://jaspersoft.jfrog.io/jaspersoft/jr-ce-releases
-            </url>
-        </repository>
-    </repositories>
+    	<distributionManagement>
+		<repository>
+			<id>invesdwin-oss</id>
+			<name>invesdwin-oss</name>
+			<url>https://invesdwin.de/repo/invesdwin-oss</url>
+		</repository>
+		<snapshotRepository>
+			<id>invesdwin-oss</id>
+			<name>invesdwin-oss</name>
+			<url>https://invesdwin.de/repo/invesdwin-oss</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		 <!--Repository containing com.lowagie:itext:jar:2.1.7.js7, not available in maven central -->
+      <repository>
+          <id>jaspersoft-third-party</id>
+          <url>
+              https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/
+          </url>
+      </repository>
+      <repository>
+          <id>jr-ce-releases</id>
+          <name>JasperReports CE Releases</name>
+          <url>
+              https://jaspersoft.jfrog.io/jaspersoft/jr-ce-releases
+          </url>
+      </repository>
+		<repository>
+			<id>invesdwin-oss</id>
+			<url>https://invesdwin.de/repo/invesdwin-oss-remote</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>invesdwin-oss</id>
+			<url>https://invesdwin.de/repo/invesdwin-oss-remote</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
