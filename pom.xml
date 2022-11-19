@@ -100,7 +100,8 @@
         <modernizer-failOnViolations>true</modernizer-failOnViolations>
         <modernizer-javaVersion>${sourceVersion}</modernizer-javaVersion>
         <modernizer-skip>false</modernizer-skip>
-
+        
+        <maven.javadoc.skip>true</maven.javadoc.skip>
     </properties>
 
     <dependencyManagement>
@@ -427,6 +428,25 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+        <plugin>
+        <groupId>org.eclipse.transformer</groupId>
+        <artifactId>org.eclipse.transformer.maven</artifactId>
+        <version>0.2.0</version>
+        <executions>
+          <execution>
+            <id>jakarta-ee</id>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <classifier>jakarta</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+        </plugins>
     </build>
 
     <profiles>
@@ -616,23 +636,6 @@
                             <defaultSince>${project.version}</defaultSince>
                         </configuration>
                     </plugin>
-                    			<plugin>
-        <groupId>org.eclipse.transformer</groupId>
-        <artifactId>org.eclipse.transformer.maven</artifactId>
-        <version>0.2.0</version>
-        <executions>
-          <execution>
-            <id>jakarta-ee</id>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <phase>package</phase>
-            <configuration>
-              <classifier>jakarta</classifier>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
                 </plugins>
             </build>
         </profile>
